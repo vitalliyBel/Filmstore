@@ -1,5 +1,6 @@
 package ControllerModelDAO;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,8 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class FilmDAO {
+/**
+ * A data access  (DAO) class that provides CRUD (Create, Read, Update, Delete)
+ * operations on a table in a database.
+ */
+ public class FilmDAO {
     private String jdbcURL;
     private String jdbcUsername;
     private String jdbcPassword;
@@ -22,6 +26,10 @@ public class FilmDAO {
         this.jdbcPassword = jdbcPassword;
     }
 
+    /**
+     * This method establishes a connection to the database
+     * @throws SQLException
+     */
     protected void connect() throws SQLException {
         if (jdbcConnection == null || jdbcConnection.isClosed()) {
             try {
@@ -40,7 +48,13 @@ public class FilmDAO {
         }
     }
 
-    public boolean insert(Film film) throws SQLException {
+    /**
+     * The method inserts a new row into the table
+     * @param film
+     * @return
+     * @throws SQLException
+     */
+   public boolean insert(Film film) throws SQLException {
         String sql = "INSERT INTO film (title, genre, year, price ) VALUES (?, ?, ?)";
         connect();
 
@@ -56,6 +70,11 @@ public class FilmDAO {
         return inserted;
     }
 
+    /**
+     * For reading: listAllFilms() - retrieves all lines
+     * @return
+     * @throws SQLException
+     */
     public List<Film> listAllFilms() throws SQLException {
         List<Film> listFilm = new ArrayList<>();
 
@@ -85,6 +104,12 @@ public class FilmDAO {
         return listFilm;
     }
 
+    /**
+     * This method deletes an existing row in the database based on the value of the primary key (ID)
+     * @param film
+     * @return
+     * @throws SQLException
+     */
     public boolean delete(Film film) throws SQLException {
         String sql = "DELETE FROM film where film_id = ?";
 
@@ -99,6 +124,12 @@ public class FilmDAO {
         return deleted;
     }
 
+    /**
+     * This method updates an existing row in the database.
+      * @param film
+     * @return
+     * @throws SQLException
+     */
     public boolean update(Film film) throws SQLException {
         String sql = "UPDATE film SET title = ?, genre = ?, year = ?, price = ?";
         sql += " WHERE film_id = ?";
@@ -116,6 +147,13 @@ public class FilmDAO {
         disconnect();
         return updated;
     }
+
+    /**
+     * This method returns a specific row based on the primary key (ID) value.
+     * @param id
+     * @return
+     * @throws SQLException
+     */
 
     public Film get(int id) throws SQLException {
         Film film = null;

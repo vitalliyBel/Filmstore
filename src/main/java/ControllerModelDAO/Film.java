@@ -1,5 +1,8 @@
 package ControllerModelDAO;
 
+/**
+ * A Java class named Film is created to model the films entity in the database
+ */
 public class Film {
     protected int id;
     protected String title;

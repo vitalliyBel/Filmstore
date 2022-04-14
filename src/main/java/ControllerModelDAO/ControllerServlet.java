@@ -10,11 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * /**
+ *  * ControllerServlet
+ *  * This servlet acts as a page controller for the application, handling all
+ *  * requests from the user.
+ */
 
 public class ControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private FilmDAO filmDAO;
 
+    /**
+     * This method instantiates the FilmDAO class the first time the servlet is instantiated.
+     * The JDBC connection information will be read from the servlet context parameters.
+     * This method is called only once during the servlet's life cycle
+     */
     public void init() {
         String jdbcURL = getServletContext().getInitParameter("jdbcURL");
         String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
@@ -28,6 +39,15 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
+
+    /**
+     * Based on the request URL (begins with /edit, /list, /new, etc.),
+     * the servlet invokes the appropriate methods.
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,6 +78,17 @@ public class ControllerServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
+
+    /**
+     * This method uses the DAO class to retrieve all the film from the database
+     * and then redirects them to the ListFilm.jsp page to display the result.
+     * Similar logic is implemented for other methods!!!
+     * @param request
+     * @param response
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
 
     private void listFilm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
