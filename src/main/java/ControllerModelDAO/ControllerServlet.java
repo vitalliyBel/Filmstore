@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *  * requests from the user.
  */
 
+@WebServlet({"/", "/new","/insert" , "/delete",  "/edit", "/update"})
+
 public class ControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private FilmDAO filmDAO;
@@ -27,11 +30,8 @@ public class ControllerServlet extends HttpServlet {
      * This method is called only once during the servlet's life cycle
      */
     public void init() {
-        String jdbcURL = getServletContext().getInitParameter("jdbcURL");
-        String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
-        String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
-        filmDAO = new FilmDAO(jdbcURL, jdbcUsername, jdbcPassword);
+        filmDAO = new FilmDAO();
 
     }
 
@@ -142,9 +142,8 @@ public class ControllerServlet extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-
-        Film film = new Film(id);
-        filmDAO.delete(film);
+        new Film(id);
+        filmDAO.delete(id);
         response.sendRedirect("list");
 
     }
