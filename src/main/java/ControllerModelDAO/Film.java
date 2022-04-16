@@ -1,9 +1,16 @@
 package ControllerModelDAO;
 
+import javax.persistence.*;
+
 /**
  * A Java class named Film is created to model the films entity in the database
  */
+@Entity
+@Table(name = "film")
+
 public class Film {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     protected String title;
     protected String genre;
